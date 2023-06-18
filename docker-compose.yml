@@ -32,3 +32,17 @@ services:
       - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+        # phpMyadominのコンテナ作成
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=db
+      - PMA_USER=db-user
+      - PMA_PASSWORD=db-pass
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
